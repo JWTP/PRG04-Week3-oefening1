@@ -1,10 +1,13 @@
 class Ball {
     
     private div : HTMLElement;
-    private posX : number;
-    private posY : number;
-    private speedX : number;
-    private speedY : number;
+    public posX : number;
+    public posY : number;
+    public ballWidth:number =40;
+    public ballHeight:number =40;
+    
+    public speedX : number;
+    public speedY : number;
     
     constructor() {
         // creeer een div element
@@ -13,17 +16,22 @@ class Ball {
         
         
         // start positie
-        this.posX = (Math.random() * (window.innerWidth/2)) + (window.innerWidth/4);
-        this.posY = (Math.random() * (window.innerHeight/2)) + (window.innerHeight/4);
+        this.posX = (window.innerWidth/2);
+        this.posY = (window.innerHeight/2);
         
         // start snelheid
-        this.speedX = Math.ceil(Math.random() * 5);
-        this.speedY = Math.ceil(Math.random() * 5);
-                
+        this.speedX = Math.ceil(Math.random() * 10);
+        this.speedY = Math.ceil(Math.random() * 10);
+        
+
         // plaatsen
         this.move();
     }
-    
+
+    private reset(){
+        this.posX = (window.innerWidth/2);
+        this.posY = (window.innerHeight/2);
+    }
     
     public move() : void {
         this.posX += this.speedX;
@@ -32,6 +40,16 @@ class Ball {
         // als we buiten beeld gaan dan de snelheid omdraaien
         // gebruik window.innerWidth en window.innerHeight om te zien of we nog in beeld zijn
         // let op dat de bal 40 pixels breed en hoog is
+
+        if(this.posX < 0 ){
+            this.reset();
+        }if(this.posX >innerWidth-40){
+            this.reset();
+        }if(this.posY < 0 ){
+            this.speedY = -this.speedY;
+        }if(this.posY > innerHeight-40){
+            this.speedY = -this.speedY;
+        }
         
         // transform gebruiken om de positie op het scherm aan te passen
         this.div.style.transform = "translate("+this.posX+"px, "+this.posY+"px)";
